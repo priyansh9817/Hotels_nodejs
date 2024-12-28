@@ -1,30 +1,42 @@
-// This file is responsible for enstablishi the connection btw node.js and data base 
+// This file is responsible for establishing the connection between Node.js and the database.
 
 const mongoose = require('mongoose');
-// Define the mongodb connection URL
+require('dotenv').config();
 
-const mongoURL = 'mongodb://localhost:27017/hotels' // Replace the database name by own name 
+// Define the MongoDB connection URL
+// For local connection
+//const mongoURL = process.env.MongoDB_URL // Replace the database name with your own name
 
-//  set up MongoDB connection
 
-mongoose.connect(mongoURL,{
-    
-})
-// Get the default connection 
-// Mongoose maintains a default connection object representing the connection 
+const mongoURL = process.env.DB_URL
+//^^^ For MongoDB Atlas connection (online setup)
 
+
+if (!mongoURL) {
+    console.error("MongoDB URL is undefined. Check your .env file.");
+    process.exit(1);
+}
+//const mongoURL = process.env.MONGO_URI;
+
+// Set up MongoDB connection
+mongoose.connect(mongoURL);
+
+// Get the default connection
+// Mongoose maintains a default connection object representing the connection
 const db = mongoose.connection;
-// Define event listner for data bases connection
 
-db.on('connected',()=>{
-    console.log("connected to mongodb server");
-});
-db.on('error',()=>{
-    console.log(" error");
-});
-db.on('disconnected',()=>{
-    console.log("disconnected to mongodb server");
+// Define event listeners for database connection
+db.on('connected', () => {
+    console.log('Connected to MongoDB server');
 });
 
-// export db connection
+db.on('error', (err) => {
+    console.error('Error connecting to MongoDB:', err);
+});
+
+db.on('disconnected', () => {
+    console.log('Disconnected from MongoDB server');
+});
+
+// Export the db connection
 module.exports = db;

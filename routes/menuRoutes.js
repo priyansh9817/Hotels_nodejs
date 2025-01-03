@@ -5,7 +5,7 @@ const MenuItem  = require('../models/menu');
 //menu item post method 
 router.post('/', async (req, res) => {
     try {
-      const data = req.body;
+      const data = req.body; 
   
       // Basic validation for required fields
       if (!data.name || typeof data.name !== 'string') {

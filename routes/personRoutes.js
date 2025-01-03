@@ -13,7 +13,7 @@ const Person = require('../models/person');
       // Save the new person document
       const response = await newPerson.save();
       console.log('Data saved:', response);
-      res.status(200).json(response);
+      res.status(200).json(response); 
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -52,7 +52,7 @@ router.get('/:worktype', async (req, res) => {
     }
   });
 
-  module.exports = router;
+ 
   // for update method 
   router.put('/:id',async(req,res)=>{
     try{
@@ -92,3 +92,4 @@ router.get('/:worktype', async (req, res) => {
     }
 
   })
+  module.exports = router;
